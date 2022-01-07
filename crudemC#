@@ -1,0 +1,113 @@
+namespace Projeto31._05.II
+{
+    public partial class Form1 : Form
+    {
+        int posicao = 0;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int linhaNumero = dataGridView1.Rows.Add();
+            DataGridViewRow linha = dataGridView1.Rows[linhaNumero];
+            linha.Cells["nome"].Value = txtNome.Text;
+            linha.Cells["telefone"].Value = txtTelefone.Text;
+            linha.Cells["endereco"].Value = txtEndereco.Text;
+            linha.Cells["cpf"].Value = txtcpf.Text;
+            linha.Cells["email"].Value = txtEmail.Text;
+
+            txtEndereco.Text = "";
+            txtNome.Text = "";
+            txtTelefone.Text = "";
+            txtcpf.Text = "";
+            txtEmail.Text = "";
+        }
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+        }
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            // Button LIMPAR
+            txtEndereco.Text = "";
+            txtNome.Text = "";
+            txtTelefone.Text = "";
+            txtcpf.Text = "";
+            txtEmail.Text = "";
+
+            btnExcluir.Enabled = true;
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+
+                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.Black;
+                
+            }    
+       
+        }
+        private void btnPesquisar_Click(object sender, EventArgs e)
+        {   
+            //Button PESQUISAR 
+            var dataSearch = txtcpf.Text;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {   
+                if (dataSearch == dataGridView1[3, i].Value.ToString())
+                {
+
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Blue;
+                    dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.White;
+                    btnExcluir.Enabled = false;
+                    break;
+                                                       
+                }
+                
+            }
+
+        }
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (posicao == i)
+                {
+
+                    DataGridViewRow linha = dataGridView1.Rows[i];
+                    linha.Cells["nome"].Value = txtNome.Text;
+                    linha.Cells["telefone"].Value = txtTelefone.Text;
+                    linha.Cells["endereco"].Value = txtEndereco.Text;
+                    linha.Cells["cpf"].Value = txtcpf.Text;
+                    linha.Cells["email"].Value = txtEmail.Text;
+
+                    txtEndereco.Text = "";
+                    txtNome.Text = "";
+                    txtTelefone.Text = "";
+                    txtcpf.Text = "";
+                    txtEmail.Text = "";
+
+                    break;
+
+                }
+
+            }
+        }
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) 
+            {
+                posicao = e.RowIndex;
+                DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
+                txtEndereco.Text = row.Cells["endereco"].Value.ToString();
+                txtTelefone.Text = row.Cells["telefone"].Value.ToString();
+                txtNome.Text = row.Cells["nome"].Value.ToString();
+                txtcpf.Text = row.Cells["cpf"].Value.ToString();
+                txtEmail.Text = row.Cells["email"].Value.ToString();
+            }
+        }
+    }
+}
